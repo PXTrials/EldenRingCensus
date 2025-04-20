@@ -1,0 +1,13 @@
+
+The Area is {{ area }}
+
+<form action="{% url 'census:record' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        {{ form.character }}
+        {{ form.role }}
+        {{ form.location }}
+        {{ form.outcome }}
+    </fieldset>
+    <input type="submit" name="operation" value="Save" />
+</form>
