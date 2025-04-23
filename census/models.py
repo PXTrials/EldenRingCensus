@@ -30,7 +30,7 @@ class Role(models.Model):
 
 class Area(models.Model):
     id = models.SmallAutoField(primary_key=True)
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     sort_order = models.PositiveSmallIntegerField()
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Area(models.Model):
 
 class Location(models.Model):
     id = models.SmallAutoField(primary_key=True)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=60)
     area = models.ForeignKey(Area, on_delete=models.PROTECT)
     sort_order = models.PositiveSmallIntegerField()
 

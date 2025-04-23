@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='area',
             name='name',
-            field=models.CharField(max_length=30, unique=True),
+            field=models.CharField(max_length=50, unique=True),
         ),
         migrations.AlterField(
             model_name='platform',

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Area',
             fields=[
                 ('id', models.SmallAutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=30)),
+                ('name', models.CharField(max_length=50)),
                 ('sort_order', models.PositiveSmallIntegerField()),
             ],
         ),
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             name='Location',
             fields=[
                 ('id', models.SmallAutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=30)),
+                ('name', models.CharField(max_length=60)),
                 ('sort_order', models.PositiveSmallIntegerField()),
                 ('area', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='census.area')),
             ],

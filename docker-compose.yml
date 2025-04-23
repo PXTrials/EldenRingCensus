@@ -1,0 +1,36 @@
+services:
+    db:
+        image: mariadb:11
+        hostname: erc_db
+        container_name: erc_db
+        restart: "no"
+        ports:
+            - "3306:3306"
+        environment:
+            - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+            - MARIADB_HOST=${DATABASE_HOST}
+            - MARIADB_DATABASE=${DATABASE_NAME}
+            - MARIADB_USER=${DATABASE_USER}
+            - MARIADB_PASSWORD=${DATABASE_PASSWORD}
+    webui:
+        build:
+            context: .
+            target: python-base
+        hostname: erc_web
+        container_name: erc_web
+        pull_policy: build
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/opt/project
+        command: "python manage.py runserver 0:8000"
+        depends_on:
+            db:
+                condition: service_healthy
+                restart: true
