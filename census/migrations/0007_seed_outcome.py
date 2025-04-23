@@ -14,10 +14,10 @@ def create_outcomes(apps, schema_editor):
         ['Host Cleared Objective', 'blue', True, False],
         ['Host Died', 'blue', False, True],
         ['I Died', 'blue', False, True],
-        ['Host Died', 'blue', False, True],
         ['Host Killed', 'red', True, False],
-        ['Disconnect', 'red', True, False],
-        ['Fogwall (Out of Fear)', 'red', True, False],
+        ['Disconnect (Evasion)', 'red', True, False],
+        ['Fogwall (Evasion)', 'red', True, False],
+        ['Disconnect (No Encounter)', 'red', False, False],
         ['Fogwall (No Encounter)', 'red', False, False],
         ['I Died', 'red', False, True]
         ]

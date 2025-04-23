@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from .models import *
 from .forms import *
 
@@ -17,9 +18,15 @@ def record(request):
                 location_id= request.POST['location'],
                 outcome_id= request.POST['outcome'],
             )
-            return HttpResponseRedirect("census:record")
+            #return HttpResponseRedirect(reverse("census:record"))
+            return HttpResponseRedirect(f"/census/record?role={request.POST['role']}&character={request.POST['character']}")
     else:
-        context = {
-            "form": EncounterForm()
-        }
+        if 'role' in request.GET:
+            context = {
+                "form": EncounterForm(request.GET)
+            }
+        else:
+            context = {
+                "form": None
+            }
     return render(request, "census/record.html", context)

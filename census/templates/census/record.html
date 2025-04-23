@@ -1,13 +1,39 @@
 
-The Area is {{ area }}
+<style>
+a.button{
+    display:block;
+    float:left;
+    overflow:hidden;
+    width: 33%;
+    border: 1px solid black;
+    padding: 10px 0;
+    text-align: center;
+}
+.clear {
+    clear:both;
+}
+</style>
+
+<a class="button" href="{% url 'census:record' %}?role=1">Gold</a>
+<a class="button" href="{% url 'census:record' %}?role=2">Red</a>
+<a class="button" href="{% url 'census:record' %}?role=3">Blue</a>
+<div class="clear"></div>
 
 <form action="{% url 'census:record' %}" method="post">
     {% csrf_token %}
+    {% if form %}
     <fieldset>
+        <label>Character</label>
         {{ form.character }}
+        <br />
         {{ form.role }}
+        <label>Location</label>
         {{ form.location }}
+        <br />
+        <label>Outcome</label>
         {{ form.outcome }}
+        <br />
     </fieldset>
     <input type="submit" name="operation" value="Save" />
+    {% endif %}
 </form>

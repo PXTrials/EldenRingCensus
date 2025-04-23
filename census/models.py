@@ -8,7 +8,14 @@ class Platform(models.Model):
     def __str__(self):
         return self.name
 
+class Player(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Character(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.PROTECT)
     name = models.CharField(max_length=30)
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
     rune_level = models.PositiveSmallIntegerField(
@@ -54,7 +61,7 @@ class Outcome(models.Model):
     sort_order = models.PositiveSmallIntegerField(default=10)
 
     def __str__(self):
-        return f'{self.role}:{self.wl()}: {self.description}'
+        return f'{self.wl()}: {self.description}'
 
     def wl(self):
         if self.is_win:
@@ -62,7 +69,7 @@ class Outcome(models.Model):
         elif self.is_loss:
             return 'Loss'
         else:
-            return 'No Result'
+            return 'Neutral'
 
 
 class Encounter(models.Model):
