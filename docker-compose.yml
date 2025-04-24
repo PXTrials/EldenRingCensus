@@ -1,6 +1,6 @@
 services:
     db:
-        image: mariadb:11
+        image: mariadb:lts
         hostname: erc_db
         container_name: erc_db
         restart: "no"
@@ -12,6 +12,12 @@ services:
             - MARIADB_DATABASE=${DATABASE_NAME}
             - MARIADB_USER=${DATABASE_USER}
             - MARIADB_PASSWORD=${DATABASE_PASSWORD}
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            start_period: 10s
+            interval: 10s
+            timeout: 5s
+            retries: 3
     webui:
         build:
             context: .
@@ -29,8 +35,21 @@ services:
             - "8000:8000"
         volumes:
             - .:/opt/project
-        command: "python manage.py runserver 0:8000"
+        #command: "python manage.py runserver 0:8000"
+        command: gunicorn erc.wsgi:application --bind 0:8000
         depends_on:
             db:
                 condition: service_healthy
                 restart: true
+    proxy:
+        image: nginx:1.19
+        container_name: erc_proxy
+        hostname: erc_proxy
+        depends_on:
+            - webui
+        ports:
+            - "443:443"
+            - "80:80"
+        volumes:
+            - ./proxy/config/nginx.conf:/etc/nginx/nginx.conf
+
