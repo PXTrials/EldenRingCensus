@@ -34,13 +34,21 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - .:/opt/project
+            #- .:/opt/project
+            - ./volumes/proxy/media:/opt/project/media
+            - ./volumes/proxy/static:/opt/project/static
         #command: "python manage.py runserver 0:8000"
         command: gunicorn erc.wsgi:application --bind 0:8000
         depends_on:
             db:
                 condition: service_healthy
-                restart: true
+                restart: true #restart webui if db is restarted
+        develop:
+            watch:
+                - action: sync
+                  path: .
+                  target: /opt/project
+
     proxy:
         image: nginx:1.19
         container_name: erc_proxy
@@ -51,5 +59,10 @@ services:
             - "443:443"
             - "80:80"
         volumes:
+            #Configuration
             - ./proxy/config/nginx.conf:/etc/nginx/nginx.conf
+
+            #Data
+            - ./volumes/proxy/media:/opt/media
+            - ./volumes/proxy/static:/opt/static
 

@@ -11,4 +11,7 @@ WORKDIR $CODE_DIR
 RUN python -m pip --no-cache-dir install --upgrade pip && \
     python -m pip --no-cache-dir install -r requirements.txt
 
+VOLUME /opt/project/media
+VOLUME /opt/project/static
+
 ENTRYPOINT ["/opt/project/entrypoint.sh"]

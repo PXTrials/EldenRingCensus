@@ -262,10 +262,10 @@
 {"map":"Scaduview", "name":"Scadutree Base"},
 {"map":"Scaduview", "name":"Scaduview"},
 {"map":"Scaduview", "name":"Shadow Keep, Back Gate"},
-{"map":"Scaduview", "name":"Hinterland"}
+{"map":"Scaduview", "name":"Hinterland"},
 {"map":"Enir-Ilim", "name":"Gate of Divinity"},
 {"map":"Enir-Ilim", "name":"Outer Wall"},
 {"map":"Enir-Ilim", "name":"Spiral Rise"},
 {"map":"Enir-Ilim", "name":"Cleansing Chamber Anteroom"},
-{"map":"Enir-Ilim", "name":"Divine Gate Front Staircase"},
+{"map":"Enir-Ilim", "name":"Divine Gate Front Staircase"}
 ]

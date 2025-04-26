@@ -1,4 +1,7 @@
+{% extends 'census/base.html' %}
+{% load custom_tags %}
 
+{% block content %}
 <style>
 a.button{
     display:block;
@@ -13,27 +16,43 @@ a.button{
     clear:both;
 }
 </style>
+<h1 class="mt-5">Record Encounter</h1>
 
-<a class="button" href="{% url 'census:record' %}?role=1">Gold</a>
-<a class="button" href="{% url 'census:record' %}?role=2">Red</a>
-<a class="button" href="{% url 'census:record' %}?role=3">Blue</a>
+{% for role in roles %}
+    {% if role.id|to_s == selected_role %}
+        <a type="button"
+            class="btn btn-{{ role_styles|get_item:role.name }} btn-lg"
+            href="{% url 'census:record' %}?role={{ role.id }}">{{ role.name|capfirst }}</a>
+    {% else %}
+        <a type="button" 
+            class="btn btn-outline-{{ role_styles|get_item:role.name }} btn-lg"
+            href="{% url 'census:record' %}?role={{ role.id}}">{{ role.name|capfirst }}</a>
+    {% endif %}
+{% endfor %}
+
 <div class="clear"></div>
 
 <form action="{% url 'census:record' %}" method="post">
     {% csrf_token %}
     {% if form %}
-    <fieldset>
-        <label>Character</label>
-        {{ form.character }}
-        <br />
-        {{ form.role }}
-        <label>Location</label>
-        {{ form.location }}
-        <br />
-        <label>Outcome</label>
-        {{ form.outcome }}
-        <br />
-    </fieldset>
-    <input type="submit" name="operation" value="Save" />
+        <fieldset>
+            {{ form.role }}<!-- hidden field -->
+            <div class="col">
+                <label for="id_character" class="form-label">Character</label><br />
+                {{ form.character }}
+            </div>
+            <div class="col">
+                <label>Location</label><br />
+                {{ form.location }}
+            </div>
+            <div class="col">
+                <label>Outcome</label><br />
+                {{ form.outcome }}
+            </div>
+            <div class="col">
+                <input type="submit" name="operation" value="Save" class="btn btn-primary d-inline-flex align-items-center" />
+            </div>
+        </fieldset>
     {% endif %}
 </form>
+{% endblock %}
