@@ -1,0 +1,28 @@
+
+{% extends 'census/base.html' %}
+
+{% block content %}
+    <h2>Character List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Platform</th>
+            <th scope="col">Name</th>
+            <th scope="col">RL+WL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for character in object_list %}
+        <tr>
+            <td>{{ character.platform }}</td>
+            <td>{{ character.name }}</td>
+            <td>{{ character.rune_level }}+{{ character.weapon_level }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/census/character_create" type="button" class="btn btn-primary">+ Add New Character</a>
+
+
+{% endblock %}

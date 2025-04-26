@@ -23,3 +23,12 @@ class EncounterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['outcome'].queryset = Outcome.objects.filter(role_id= args[0]['role']).order_by('sort_order')
+
+class CharacterForm(forms.Form):
+    platform = forms.ModelChoiceField(
+        label = "Platform",
+        queryset=Platform.objects.order_by('id')
+    )
+    name = forms.CharField()
+    rune_level = forms.CharField()
+    weapon_level = forms.CharField()
