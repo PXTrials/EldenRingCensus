@@ -2,30 +2,21 @@
 {% extends 'census/base.html' %}
 
 {% block content %}
-<h2>Add Character</h2>
+<h1>Add Character</h1>
 
 <form action="{% url 'census:character_save' %}" method="post">
     {% csrf_token %}
     <fieldset>
-        <div class="col">
-            <label for="id_platform" class="form-label">Platform</label><br />
-            {{ form.platform }}
-        </div>
-        <div class="col">
-            <label>Name</label><br />
-            {{ form.name }}
-        </div>
-        <div class="col">
-            <label>Rune Level</label><br />
-            {{ form.rune_level }}
-        </div>
-        <div class="col">
-            <label>Weapon Level (Smithing)</label><br />
-            {{ form.weapon_level }}
-        </div>
-        <div class="col">
-            <input type="submit" name="operation" value="Save" class="btn btn-primary d-inline-flex align-items-center" />
-        </div>
+        <label for="id_platform" class="form-label">Platform</label>
+        {{ form.platform }}
+        <label>Name</label>
+        {{ form.name }}
+        <label>Rune Level</label>
+        {{ form.rune_level }}
+        <label>Weapon Level (Smithing)</label>
+        {{ form.weapon_level }}
+        <br />
+        <input type="submit" name="operation" value="Save" class="btn btn-primary d-inline-flex align-items-center" />
     </fieldset>
 </form>
 {% endblock %}

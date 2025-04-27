@@ -6,20 +6,21 @@ class EncounterForm(forms.Form):
     character = forms.ModelChoiceField(
         label="Character",
         queryset=Character.objects.all(),
-        widget=forms.Select(attrs={'class':'selectpicker'})
+        widget=forms.Select(attrs={'class':'selectpicker form-control'})
     )
     #role = forms.ModelChoiceField(label="Role", queryset=Role.objects.all())
     role = forms.CharField(widget=forms.HiddenInput())
     location = forms.ModelChoiceField(
         label="Location",
         queryset=Location.objects.order_by('sort_order'),
-        widget=forms.Select(attrs={'class':'selectpicker','data-live-search':'true'})
+        widget=forms.Select(attrs={'class':'selectpicker form-control','data-live-search':'true'})
     )
     outcome = forms.ModelChoiceField(
         label="Outcome",
         queryset=Outcome.objects.all(),
-        widget=forms.Select(attrs={'class':'selectpicker'})
+        widget=forms.Select(attrs={'class':'selectpicker form-control'})
         )
+    host_runes = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')

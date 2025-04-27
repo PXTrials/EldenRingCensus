@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views.generic import ListView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -20,12 +21,18 @@ def record(request):
     if request.method == 'POST':
         form = EncounterForm(request.POST, request=request)
         if form.is_valid():
-            Encounter.objects.create(
+            encounter = Encounter(
                 character_id= request.POST['character'],
                 role_id= request.POST['role'],
                 location_id= request.POST['location'],
                 outcome_id= request.POST['outcome'],
             )
+            if 'host_runes' in request.POST and request.POST['host_runes']:
+                encounter.host_runes = int(request.POST['host_runes'])
+
+            encounter.save()
+            messages.success(request, "Encounter successfully recorded")
+
             #return HttpResponseRedirect(reverse("census:record"))
             return HttpResponseRedirect(f"/census/record?role={request.POST['role']}&character={request.POST['character']}")
     else:
@@ -50,6 +57,7 @@ def character_save(request):
             rune_level = request.POST['rune_level'],
             weapon_level = request.POST['weapon_level'],
         )
+        messages.success(request, "New Character Saved")
         return HttpResponseRedirect("/census/characters")
 
 def character_create(request):
@@ -70,6 +78,7 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, "New Account Created")
             return HttpResponseRedirect("/census/record")
     else:
         form = UserCreationForm()

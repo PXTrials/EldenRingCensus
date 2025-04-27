@@ -11,7 +11,7 @@ a.role-btn{
     clear:both;
 }
 </style>
-<h1 class="mt-5">Record Encounter</h1>
+<h1>Record Encounter</h1>
 
 {% for role in roles %}
     {% if role.id|to_s == selected_role %}
@@ -32,21 +32,19 @@ a.role-btn{
     {% if form %}
         <fieldset>
             {{ form.role }}<!-- hidden field -->
-            <div class="col">
-                <label for="id_character" class="form-label">Character</label><br />
+                <label for="id_character" class="form-label">Character</label>
                 {{ form.character }}
-            </div>
-            <div class="col">
-                <label>Location</label><br />
+                <label>Location</label>
                 {{ form.location }}
-            </div>
-            <div class="col">
-                <label>Outcome</label><br />
+                <label>Outcome</label>
                 {{ form.outcome }}
-            </div>
-            <div class="col">
-                <input type="submit" name="operation" value="Save" class="btn btn-primary d-inline-flex align-items-center" />
-            </div>
+                {% if selected_role == '2' %}
+                    <label>Host Runes (Optional)</label>
+                    {{ form.host_runes }}
+                {% endif %}
+                <br />
+                <br />
+                <input type="submit" name="operation" value="Save" class="btn btn-primary" />
         </fieldset>
     {% endif %}
 </form>

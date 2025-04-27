@@ -72,6 +72,7 @@ class Encounter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     role = models.ForeignKey(Role, on_delete=models.PROTECT)
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
+    host_runes = models.PositiveIntegerField(null=True, blank=True)
     host_level = models.PositiveSmallIntegerField(
                             null=True,
                             blank=True,
