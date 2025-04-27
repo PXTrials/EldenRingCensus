@@ -65,4 +65,5 @@ services:
             #Data
             - ./volumes/proxy/media:/opt/media
             - ./volumes/proxy/static:/opt/static
+            - ./volumes/proxy/certificates:/opt/certificates
 

@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-z!5&%+%!q+v1@i9rzd#vc^7v0+(6_-!nk-lxdh+7&!-#y#p6@7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['54.226.186.186','localhost']
+ALLOWED_HOSTS = ['www.er-census.com','er-census.com']
+CSRF_TRUSTED_ORIGINS = ['https://www.er-census.com','https://er-census.com']
 
 
 # Application definition
@@ -134,3 +136,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+#SECURE_SSL_REDIRECT = True #Handled by nginx
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
