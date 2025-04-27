@@ -12,7 +12,7 @@ def load_roles(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('census', '0003_rename_outcomes_outcome'),
+        ('census', '0003_seed_platforms')
     ]
 
     operations = [

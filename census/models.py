@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.contrib.auth.models import User
 
 class Platform(models.Model):
     id = models.SmallAutoField(primary_key=True)
@@ -8,14 +9,8 @@ class Platform(models.Model):
     def __str__(self):
         return self.name
 
-class Player(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-
-    def __str__(self):
-        return self.name
-
 class Character(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=30)
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
     rune_level = models.PositiveSmallIntegerField(

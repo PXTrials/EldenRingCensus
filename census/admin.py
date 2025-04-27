@@ -6,6 +6,5 @@ from .models import *
 admin.site.register(Area)
 admin.site.register(Location)
 admin.site.register(Outcome)
-admin.site.register(Player)
 admin.site.register(Character)
 admin.site.register(Encounter)

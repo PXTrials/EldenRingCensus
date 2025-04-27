@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 
 class EncounterForm(forms.Form):
+
     character = forms.ModelChoiceField(
         label="Character",
         queryset=Character.objects.all(),
@@ -21,7 +22,9 @@ class EncounterForm(forms.Form):
         )
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
+        self.fields['character'].queryset = Character.objects.filter(user_id=self.request.user.id)
         self.fields['outcome'].queryset = Outcome.objects.filter(role_id= args[0]['role']).order_by('sort_order')
 
 class CharacterForm(forms.Form):

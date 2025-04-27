@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Area',
             fields=[
                 ('id', models.SmallAutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=50)),
+                ('name', models.CharField(max_length=50, unique=True)),
                 ('sort_order', models.PositiveSmallIntegerField()),
             ],
         ),
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             name='Role',
             fields=[
                 ('id', models.SmallAutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=10)),
+                ('name', models.CharField(max_length=10, unique=True)),
             ],
         ),
         migrations.CreateModel(
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Outcomes',
+            name='Outcome',
             fields=[
                 ('id', models.SmallAutoField(primary_key=True, serialize=False)),
                 ('description', models.CharField(max_length=50)),
@@ -51,10 +51,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('host_level', models.PositiveSmallIntegerField(validators=[django.core.validators.MaxValueValidator(713)])),
+                ('host_level', models.PositiveSmallIntegerField(blank=True, null=True, validators=[django.core.validators.MaxValueValidator(713)])),
                 ('character', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='census.character')),
                 ('location', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='census.location')),
-                ('outcome', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='census.outcomes')),
+                ('outcome', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='census.outcome')),
                 ('role', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='census.role')),
             ],
         ),

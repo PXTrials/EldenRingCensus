@@ -3,14 +3,9 @@
 
 {% block content %}
 <style>
-a.button{
-    display:block;
-    float:left;
-    overflow:hidden;
-    width: 33%;
-    border: 1px solid black;
-    padding: 10px 0;
-    text-align: center;
+a.role-btn{
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .clear {
     clear:both;
@@ -21,11 +16,11 @@ a.button{
 {% for role in roles %}
     {% if role.id|to_s == selected_role %}
         <a type="button"
-            class="btn btn-{{ role_styles|get_item:role.name }} btn-lg"
+            class="btn role-btn btn-{{ role_styles|get_item:role.name }} btn-lg"
             href="{% url 'census:record' %}?role={{ role.id }}">{{ role.name|capfirst }}</a>
     {% else %}
         <a type="button" 
-            class="btn btn-outline-{{ role_styles|get_item:role.name }} btn-lg"
+            class="btn role-btn btn-outline-{{ role_styles|get_item:role.name }} btn-lg"
             href="{% url 'census:record' %}?role={{ role.id}}">{{ role.name|capfirst }}</a>
     {% endif %}
 {% endfor %}

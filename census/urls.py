@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from census.views import CharacterListView
 from . import views
 
@@ -9,4 +9,6 @@ urlpatterns = [
     path('characters/', CharacterListView.as_view()),
     path('character_create', views.character_create, name="character_create"),
     path('character_save', views.character_save, name="character_save"),
+    path('sign_up', views.sign_up, name="sign_up"),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

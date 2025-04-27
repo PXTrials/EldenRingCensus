@@ -40,7 +40,7 @@ def delete_outcomes(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('census', '0006_alter_area_name_alter_outcome_description_and_more'),
+        ('census', '0005_seed_locations'),
     ]
 
     operations = [

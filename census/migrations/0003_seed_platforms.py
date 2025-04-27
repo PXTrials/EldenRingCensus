@@ -17,7 +17,7 @@ def delete_platforms(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('census', '0010_character_player'),
+        ('census', '0002_area_role_location_outcomes_encounter')
     ]
 
     operations = [

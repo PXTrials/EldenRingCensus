@@ -1,13 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from .models import *
 from .forms import *
 
 
 def index(request):
-    return HttpResponse("Hullo world! At the httprequest")
+    return render(request, "census/index.html", {})
 
 def record(request):
     role_styles = {
@@ -16,7 +18,7 @@ def record(request):
         'blue':'primary'
     }
     if request.method == 'POST':
-        form = EncounterForm(request.POST)
+        form = EncounterForm(request.POST, request=request)
         if form.is_valid():
             Encounter.objects.create(
                 character_id= request.POST['character'],
@@ -34,7 +36,7 @@ def record(request):
             'selected_role': request.GET.get('role')
         }
         if 'role' in request.GET:
-            context['form'] = EncounterForm(request.GET)
+            context['form'] = EncounterForm(request.GET, request=request)
 
     return render(request, "census/record.html", context)
 
@@ -42,7 +44,7 @@ def character_save(request):
     form = CharacterForm(request.POST)
     if form.is_valid():
         Character.objects.create(
-            player_id=1,
+            user_id = request.user.id,
             platform_id = request.POST['platform'],
             name = request.POST['name'],
             rune_level = request.POST['rune_level'],
@@ -59,3 +61,16 @@ def character_create(request):
 class CharacterListView(ListView):
     model = Character
 
+    def get_queryset(self):
+        return Character.objects.filter(user_id=self.request.user.id)
+
+def sign_up(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect("/census/record")
+    else:
+        form = UserCreationForm()
+    return render(request, "census/sign_up.html", {"form": form})
