@@ -18,6 +18,11 @@ def record(request):
         'red':'danger',
         'blue':'primary'
     }
+    if 'character' in request.GET:
+        character_obj = Character.objects.filter(id=request.GET['character']).first()
+        if character_obj.user_id != request.user.id:
+            return HttpResponseRedirect("census/characters")
+
     if request.method == 'POST':
         form = EncounterForm(request.POST, request=request)
         if form.is_valid():
@@ -40,8 +45,10 @@ def record(request):
             'form': None,
             'roles': Role.objects.order_by('id'),
             'role_styles': role_styles,
-            'selected_role': request.GET.get('role')
+            'selected_role': request.GET.get('role'),
         }
+        if 'character' in request.GET:
+            context['character_obj'] = character_obj
         if 'role' in request.GET:
             context['form'] = EncounterForm(request.GET, request=request)
 
@@ -66,6 +73,9 @@ def character_create(request):
     }
     return render(request, "census/character_create.html", context)
 
+def stats(request):
+    return render(request, "census/stats.html")
+
 class CharacterListView(ListView):
     model = Character
 
@@ -79,7 +89,7 @@ def sign_up(request):
             user = form.save()
             login(request, user)
             messages.success(request, "New Account Created")
-            return HttpResponseRedirect("/census/record")
+            return HttpResponseRedirect("/census/characters")
     else:
         form = UserCreationForm()
     return render(request, "census/sign_up.html", {"form": form})

@@ -13,39 +13,54 @@ a.role-btn{
 </style>
 <h1>Record Encounter</h1>
 
-{% for role in roles %}
-    {% if role.id|to_s == selected_role %}
-        <a type="button"
-            class="btn role-btn btn-{{ role_styles|get_item:role.name }} btn-lg"
-            href="{% url 'census:record' %}?role={{ role.id }}">{{ role.name|capfirst }}</a>
+{% if user.username %}
+    {% if character_obj %}
+        <h3>{{ character_obj }}</h3>
+        {% for role in roles %}
+            {% if role.id|to_s == selected_role %}
+                <a type="button"
+                    class="btn role-btn btn-{{ role_styles|get_item:role.name }} btn-lg"
+                    href="{% url 'census:record' %}?role={{ role.id }}&character={{ character_obj.id }}">{{ role.name|capfirst }}</a>
+            {% else %}
+                <a type="button" 
+                    class="btn role-btn btn-outline-{{ role_styles|get_item:role.name }} btn-lg"
+                    href="{% url 'census:record' %}?role={{ role.id}}&character={{ character_obj.id }}">{{ role.name|capfirst }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <div class="clear"></div>
+
+        <form action="{% url 'census:record' %}" method="post">
+            {% csrf_token %}
+            {% if form %}
+                <fieldset>
+                    {{ form.role }}<!-- hidden field -->
+                    {{ form.character }}
+                    <label>Location</label>
+                    {{ form.location }}
+                    <label>Outcome</label>
+                    {{ form.outcome }}
+                    {% if selected_role == '2' %}
+                        <label>Host Runes (Optional)</label>
+                        {{ form.host_runes }}
+                    {% endif %}
+                    <br />
+                    <br />
+                    <input type="submit" name="operation" value="Save" class="btn btn-primary" />
+                </fieldset>
+            {% endif %}
+        </form>
     {% else %}
-        <a type="button" 
-            class="btn role-btn btn-outline-{{ role_styles|get_item:role.name }} btn-lg"
-            href="{% url 'census:record' %}?role={{ role.id}}">{{ role.name|capfirst }}</a>
-    {% endif %}
-{% endfor %}
+        <p>Select a Character to record an encounter:</p>
 
-<div class="clear"></div>
-
-<form action="{% url 'census:record' %}" method="post">
-    {% csrf_token %}
-    {% if form %}
-        <fieldset>
-            {{ form.role }}<!-- hidden field -->
-                <label for="id_character" class="form-label">Character</label>
-                {{ form.character }}
-                <label>Location</label>
-                {{ form.location }}
-                <label>Outcome</label>
-                {{ form.outcome }}
-                {% if selected_role == '2' %}
-                    <label>Host Runes (Optional)</label>
-                    {{ form.host_runes }}
-                {% endif %}
-                <br />
-                <br />
-                <input type="submit" name="operation" value="Save" class="btn btn-primary" />
-        </fieldset>
+        <a class="btn btn-lg btn-primary" href="/census/characters">My Characters</a>
     {% endif %}
-</form>
+        
+
+{% else %}
+<p>Log in to record an encounter</p>
+
+<a class="btn btn-lg btn-primary" href="/census/accounts/login">Log In</a>
+
+{% endif %}
 {% endblock %}

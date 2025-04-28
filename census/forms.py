@@ -6,7 +6,7 @@ class EncounterForm(forms.Form):
     character = forms.ModelChoiceField(
         label="Character",
         queryset=Character.objects.all(),
-        widget=forms.Select(attrs={'class':'selectpicker form-control'})
+        widget=forms.HiddenInput()
     )
     #role = forms.ModelChoiceField(label="Role", queryset=Role.objects.all())
     role = forms.CharField(widget=forms.HiddenInput())

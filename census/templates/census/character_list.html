@@ -2,27 +2,36 @@
 {% extends 'census/base.html' %}
 
 {% block content %}
-    <h2>Character List</h2>
-<table class="table">
+<h1>Character List</h1>
+{% if user.username %}
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Platform</th>
             <th scope="col">RL+WL</th>
+            <th scope="col">Use</th>
         </tr>
     </thead>
     <tbody>
         {% for character in object_list %}
-        <tr>
+        <tr class="position-relative">
             <td>{{ character.name }}</td>
             <td>{{ character.platform }}</td>
             <td>{{ character.rune_level }}+{{ character.weapon_level }}</td>
+            <td><a class="stretched-link btn btn-sm btn-primary" href="/census/record?character={{ character.id }}">Use</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
 <a href="/census/character_create" type="button" class="btn btn-primary">+ Add New Character</a>
+{% else %}
+<p>Log in to view and edit your character list</p>
+
+<a class="btn btn-lg btn-primary" href="/census/accounts/login">Log In</a>
+
+{% endif %}
 
 
 {% endblock %}

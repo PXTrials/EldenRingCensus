@@ -61,7 +61,7 @@
             max-width: 500px;
         }
         h1 {
-            margin-top: 50px;
+            margin-top: 40px;
         }
         .helptext {
             font-size: 12px;
@@ -81,21 +81,23 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item {% if request.path == '/census/sign_up/' %} active {% endif %}">
-                        <a class="nav-link" href="/census/sign_up">Sign Up</a>
-                    </li>
-                    <li class="nav-item {% if request.path == '/census/login/' %} active {% endif %}">
-                        <a class="nav-link" href="/census/accounts/login">Log In</a>
-                    </li>
                     <li class="nav-item {% if request.path == '/census/characters/' %} active {% endif %}">
                         <a class="nav-link" href="/census/characters">My Characters</a>
                     </li>
                     <li class="nav-item {% if request.path == '/census/record' %} active {% endif %}">
                         <a class="nav-link" href="/census/record">Record Encounter</a>
                     </li>
-                    <li class="nav-item {% if request.path == '/census/reports/' %} active {% endif %}">
-                        <a class="nav-link" href="/census/reports">View Stats</a>
+                    <li class="nav-item {% if request.path == '/census/stats/' %} active {% endif %}">
+                        <a class="nav-link" href="/census/stats">View Stats</a>
                     </li>
+                    {% if not user.username %}
+                    <li class="nav-item {% if request.path == '/census/sign_up/' %} active {% endif %}">
+                        <a class="nav-link" href="/census/sign_up">Sign Up</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/census/login/' %} active {% endif %}">
+                        <a class="nav-link" href="/census/accounts/login">Log In</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                 </form>
@@ -118,9 +120,9 @@
 
     <footer class="footer mt-auto py-3">
         <div class="container">
-            Elden Ring Census |
-            {% if user %}
-                <span>Logged in as {{ user.username }}</span>
+            Elden Ring Census
+            {% if user.username %}
+                <span> | Logged in as {{ user.username }}{% include "registration/_logout.html" %} </span>
             {% endif %}
         </div>
     </footer>
