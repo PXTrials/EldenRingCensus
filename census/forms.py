@@ -15,12 +15,18 @@ class EncounterForm(forms.Form):
         queryset=Location.objects.order_by('sort_order'),
         widget=forms.Select(attrs={'class':'selectpicker form-control','data-live-search':'true'})
     )
+    coop_type = forms.ModelChoiceField(
+        label="CoopType",
+        queryset=CoopType.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class':'selectpicker form-control'})
+        )
     outcome = forms.ModelChoiceField(
         label="Outcome",
         queryset=Outcome.objects.all(),
         widget=forms.Select(attrs={'class':'selectpicker form-control'})
         )
-    host_runes = forms.CharField(required=False)
+    host_runes = forms.IntegerField(required=False, min_value=1, max_value=355173)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
@@ -34,5 +40,5 @@ class CharacterForm(forms.Form):
         queryset=Platform.objects.order_by('id')
     )
     name = forms.CharField()
-    rune_level = forms.CharField()
-    weapon_level = forms.CharField()
+    rune_level = forms.IntegerField(min_value=1, max_value=713)
+    weapon_level = forms.IntegerField(min_value=0, max_value=25)

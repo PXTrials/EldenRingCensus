@@ -34,12 +34,15 @@ def record(request):
             )
             if 'host_runes' in request.POST and request.POST['host_runes']:
                 encounter.host_runes = int(request.POST['host_runes'])
+            if 'coop_type' in request.POST and request.POST['coop_type']:
+                encounter.coop_type_id = int(request.POST['coop_type'])
 
             encounter.save()
             messages.success(request, "Encounter successfully recorded")
 
             #return HttpResponseRedirect(reverse("census:record"))
             return HttpResponseRedirect(f"/census/record?role={request.POST['role']}&character={request.POST['character']}")
+
     else:
         context = {
             'form': None,

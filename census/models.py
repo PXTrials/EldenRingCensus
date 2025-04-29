@@ -66,6 +66,13 @@ class Outcome(models.Model):
         else:
             return 'Neutral'
 
+class CoopType(models.Model):
+    id = models.SmallAutoField(primary_key=True)
+    description = models.CharField(max_length=20)
+    sort_order = models.PositiveSmallIntegerField(default=10)
+
+    def __str__(self):
+        return self.description
 
 class Encounter(models.Model):
     character = models.ForeignKey(Character, on_delete=models.PROTECT)
@@ -78,6 +85,7 @@ class Encounter(models.Model):
                             blank=True,
                             validators=[MaxValueValidator(713)]
                             )
+    coop_type = models.ForeignKey(CoopType, on_delete=models.PROTECT, null=True, blank=True)
     outcome = models.ForeignKey(Outcome, on_delete=models.PROTECT)
     
     def __str__(self):
