@@ -3,5 +3,43 @@
 
 {% block content %}
 <h1>Stats</h1>
-<p>Coming Soon, just need some data!</p>
+<h3>Submissions by Platform</h3>
+<table class="table table-hover">
+    <tbody>
+{% for platform in platforms %}
+    <tr>
+        <td>{{ platform }}</td>
+        <td>{{ platform.num_encounters }} </td>
+    </tr>
+{% endfor %}
+</table>
+
+<h3>Submissions by Role</h3>
+<table class="table table-hover">
+    <tbody>
+{% for role in roles %}
+    <tr>
+        <td>{{ role }}</td>
+        <td>{{ role.num_encounters }} </td>
+    </tr>
+{% endfor %}
+</table>
+<br />
+
+<h3>Top Submission Brackets</h3>
+<table class="table table-hover">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Bracket</th>
+                <th>Num Submissions</th>
+{% for level in levels %}
+    <tr>
+        <td>RL{{ level.rune_level }}+{{ level.weapon_level }}</td>
+        <td>{{ level.num_encounters }} </td>
+    </tr>
+{% endfor %}
+</table>
+<br />
+<p>Much more breakout (and map) data coming soon! Keep those encounter submissions flowing!</p>
 {% endblock %}

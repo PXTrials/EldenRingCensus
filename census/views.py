@@ -5,6 +5,8 @@ from django.views.generic import ListView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib import messages
+from django.db import connection
+from collections import namedtuple
 from .models import *
 from .forms import *
 
@@ -77,13 +79,32 @@ def character_create(request):
     return render(request, "census/character_create.html", context)
 
 def stats(request):
-    return render(request, "census/stats.html")
+    platforms = Platform.objects.annotate(num_encounters=models.Count("character__encounter")).order_by("-num_encounters")
+    roles = Role.objects.annotate(num_encounters=models.Count("encounter")).order_by("id")
+    query = '''select rune_level, weapon_level, count(census_encounter.id) as num_encounters
+        from census_character
+        inner join census_encounter on census_encounter.character_id = census_character.id
+        group by rune_level, weapon_level
+        order by count(census_encounter.id) desc
+        limit 10'''
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        levels = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+    return render(request, "census/stats.html", {"platforms":platforms, "roles":roles, "levels": levels})
 
 class CharacterListView(ListView):
     model = Character
 
     def get_queryset(self):
         return Character.objects.filter(user_id=self.request.user.id)
+
+class HistoryListView(ListView):
+    model = Encounter
+
+    def get_queryset(self):
+        return Encounter.objects.filter(character__user_id=self.request.user.id).order_by("-created_at")[:100]
 
 def sign_up(request):
     if request.method == "POST":

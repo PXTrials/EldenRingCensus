@@ -87,7 +87,10 @@
                     <li class="nav-item {% if request.path == '/census/record' %} active {% endif %}">
                         <a class="nav-link" href="/census/record">Record Encounter</a>
                     </li>
-                    <li class="nav-item {% if request.path == '/census/stats/' %} active {% endif %}">
+                    <li class="nav-item {% if request.path == '/census/history/' %} active {% endif %}">
+                        <a class="nav-link" href="/census/history">My History</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/census/stats' %} active {% endif %}">
                         <a class="nav-link" href="/census/stats">View Stats</a>
                     </li>
                     {% if not user.username %}

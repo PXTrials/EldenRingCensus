@@ -1,0 +1,26 @@
+
+{% extends 'census/base.html' %}
+
+{% block content %}
+<h1>Encounter History</h1>
+{% if user.username %}
+<table class="table table-hover">
+    <tbody>
+        {% for encounter in object_list %}
+        <tr class="position-relative">
+            <td>{{ encounter }}</td>
+            <td>{{ encounter.created_at }} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p>Log in to view your history</p>
+
+<a class="btn btn-lg btn-primary" href="/census/accounts/login">Log In</a>
+
+{% endif %}
+
+
+{% endblock %}
