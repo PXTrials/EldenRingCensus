@@ -23,6 +23,9 @@ class Character(models.Model):
     def __str__(self):
         return f'{self.name} ({self.platform} RL{self.rune_level}+{self.weapon_level})'
 
+    class Meta:
+        ordering = ['name', 'rune_level', 'weapon_level']
+
 class Role(models.Model):
     id = models.SmallAutoField(primary_key=True)
     name = models.CharField(max_length=10, unique=True)
@@ -38,6 +41,9 @@ class Area(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['sort_order']
+
 class Location(models.Model):
     id = models.SmallAutoField(primary_key=True)
     name = models.CharField(max_length=60)
@@ -46,6 +52,9 @@ class Location(models.Model):
 
     def __str__(self):
         return f'{self.area}: {self.name}'
+
+    class Meta:
+        ordering = ['sort_order']
 
 class Outcome(models.Model):
     id = models.SmallAutoField(primary_key=True)
@@ -66,6 +75,9 @@ class Outcome(models.Model):
         else:
             return 'Neutral'
 
+    class Meta:
+        ordering = ['sort_order']
+
 class CoopType(models.Model):
     id = models.SmallAutoField(primary_key=True)
     description = models.CharField(max_length=20)
@@ -73,6 +85,9 @@ class CoopType(models.Model):
 
     def __str__(self):
         return self.description
+
+    class Meta:
+        ordering = ['sort_order']
 
 class Encounter(models.Model):
     character = models.ForeignKey(Character, on_delete=models.PROTECT)

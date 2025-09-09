@@ -5,41 +5,74 @@
 <h1>Stats</h1>
 <h3>Submissions by Platform</h3>
 <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Platform</th>
+            <th style="text-align:right">Num Encounters</th>
+        </tr>
+    </thead>
     <tbody>
-{% for platform in platforms %}
-    <tr>
-        <td>{{ platform }}</td>
-        <td>{{ platform.num_encounters }} </td>
-    </tr>
-{% endfor %}
+    {% for platform in platforms %}
+        <tr>
+            <td>{{ platform }}</td>
+            <td style="text-align:right">{{ platform.num_encounters }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 
 <h3>Submissions by Role</h3>
 <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th style="text-align:right">Num Encounters</th>
+        </tr>
+    </thead>
     <tbody>
-{% for role in roles %}
-    <tr>
-        <td>{{ role }}</td>
-        <td>{{ role.num_encounters }} </td>
-    </tr>
-{% endfor %}
+    {% for role in roles %}
+        <tr>
+            <td>{{ role }}</td>
+            <td style="text-align:right">{{ role.num_encounters }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 <br />
 
-<h3>Top Submission Brackets</h3>
+<h3>Top 10 Submission Brackets</h3>
 <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Bracket</th>
+            <th style="text-align:right">Num Encounters</th>
+        </tr>
+    </thead>
     <tbody>
-        <thead>
-            <tr>
-                <th>Bracket</th>
-                <th>Num Submissions</th>
 {% for level in levels %}
     <tr>
         <td>RL{{ level.rune_level }}+{{ level.weapon_level }}</td>
-        <td>{{ level.num_encounters }} </td>
+        <td style="text-align:right">{{ level.num_encounters }} </td>
+    </tr>
+{% endfor %}
+</table>
+
+<h3>Top 10 Locations</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Location</th>
+            <th style="text-align:right">Num Encounters</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for location in locations %}
+    <tr>
+        <td>{{ location }}</td>
+        <td style="text-align:right">{{ location.num_encounters }} </td>
     </tr>
 {% endfor %}
 </table>
 <br />
-<p>Much more breakout (and map) data coming soon! Keep those encounter submissions flowing!</p>
+<h4>Much more breakout data coming soon! Keep those encounter submissions flowing!</h4>
 {% endblock %}

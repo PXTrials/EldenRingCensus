@@ -81,6 +81,7 @@ def character_create(request):
 def stats(request):
     platforms = Platform.objects.annotate(num_encounters=models.Count("character__encounter")).order_by("-num_encounters")
     roles = Role.objects.annotate(num_encounters=models.Count("encounter")).order_by("id")
+    locations = Location.objects.annotate(num_encounters=models.Count("encounter")).order_by("-num_encounters")[:10]
     query = '''select rune_level, weapon_level, count(census_encounter.id) as num_encounters
         from census_character
         inner join census_encounter on census_encounter.character_id = census_character.id
@@ -92,7 +93,7 @@ def stats(request):
         columns = [col[0] for col in cursor.description]
         levels = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
-    return render(request, "census/stats.html", {"platforms":platforms, "roles":roles, "levels": levels})
+    return render(request, "census/stats.html", {"platforms":platforms, "roles":roles, "levels": levels, "locations": locations})
 
 class CharacterListView(ListView):
     model = Character

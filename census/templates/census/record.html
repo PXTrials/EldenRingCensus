@@ -38,10 +38,8 @@ a.role-btn{
                     {{ form.character }}
                     <label>Location</label>
                     {{ form.location }}
-                    {% if selected_role == '2' %}
-                        <label>Coop Type:</label>
-                        {{ form.coop_type }}
-                    {% endif %}
+                    <label>Coop Type:</label>
+                    {{ form.coop_type }}
                     <label>Outcome</label>
                     {{ form.outcome }}
                     {% if selected_role == '2' %}
