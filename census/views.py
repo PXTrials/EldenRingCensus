@@ -59,6 +59,21 @@ def record(request):
 
     return render(request, "census/record.html", context)
 
+def character_stats(request):
+    context = {}
+    if 'character' in request.GET:
+        character_obj = Character.objects.filter(id=request.GET['character']).first()
+        if character_obj.user_id != request.user.id:
+            return HttpResponseRedirect("characters")
+
+        if 'character' in request.GET:
+            context['character_obj'] = character_obj
+            context['locations'] = Location.objects.annotate(num_encounters=models.Count("encounter", filter=models.Q(encounter__character=character_obj))).order_by("-num_encounters")[:10]
+            context['coop_types'] = CoopType.objects.annotate(num_encounters=models.Count("encounter", filter=models.Q(encounter__character=character_obj))).order_by("sort_order")[:10]
+            context['num_encounters_with_type'] = sum(e.num_encounters for e in context['coop_types'])
+    return render(request, "census/character_stats.html", context)
+
+
 def character_save(request):
     form = CharacterForm(request.POST)
     if form.is_valid():

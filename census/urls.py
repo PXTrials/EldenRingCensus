@@ -6,6 +6,7 @@ app_name = "census"
 urlpatterns = [
     path("", views.index, name="index"),
     path('record', views.record, name="record"),
+    path('character_stats', views.character_stats, name="character_stats"),
     path('stats', views.stats, name="stats"),
     path('characters/', CharacterListView.as_view()),
     path('history/', HistoryListView.as_view()),

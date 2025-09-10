@@ -1,0 +1,79 @@
+{% extends 'census/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<style>
+a.role-btn{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.clear {
+    clear:both;
+}
+</style>
+
+{% if user.username %}
+    {% if character_obj %}
+        <h1>Stats for {{ character_obj }}</h1>
+        <h3>Top 10 Locations</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th style="text-align:right">Num Encounters</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for location in locations %}
+            <tr>
+                <td>{{ location }}</td>
+                <td style="text-align:right">{{ location.num_encounters }} </td>
+            </tr>
+        {% endfor %}
+        </table>
+        <h3>Coop Types</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Coop Type</th>
+                    <th style="text-align:right">Num Encounters</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for coop_type in coop_types %}
+            <tr>
+                <td>{{ coop_type }}</td>
+                <td style="text-align:right">{{ coop_type.num_encounters }} ({{ coop_type.num_encounters|percent:num_encounters_with_type }}%)</td>
+            </tr>
+        {% endfor %}
+        </table>
+        {% for role in roles %}
+            {% if role.id|to_s == selected_role %}
+                <a type="button"
+                    class="btn role-btn btn-{{ role_styles|get_item:role.name }} btn-lg"
+                    href="{% url 'census:record' %}?role={{ role.id }}&character={{ character_obj.id }}">{{ role.name|capfirst }}</a>
+            {% else %}
+                <a type="button" 
+                    class="btn role-btn btn-outline-{{ role_styles|get_item:role.name }} btn-lg"
+                    href="{% url 'census:record' %}?role={{ role.id}}&character={{ character_obj.id }}">{{ role.name|capfirst }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <div class="clear"></div>
+
+    {% else %}
+        <h1>Character Stats</h1>
+        <p>Select a Character to view stats:</p>
+
+        <a class="btn btn-lg btn-primary" href="/census/characters">My Characters</a>
+    {% endif %}
+        
+
+{% else %}
+    <h1>Character Stats</h1>
+    <p>Log in to View Character Stats</p>
+
+    <a class="btn btn-lg btn-primary" href="/census/accounts/login">Log In</a>
+
+    {% endif %}
+{% endblock %}

@@ -10,6 +10,7 @@
             <th scope="col">Name</th>
             <th scope="col">Platform</th>
             <th scope="col">RL+WL</th>
+            <th scope="col">Stats</th>
             <th scope="col">Use</th>
         </tr>
     </thead>
@@ -19,7 +20,8 @@
             <td>{{ character.name }}</td>
             <td>{{ character.platform }}</td>
             <td>{{ character.rune_level }}+{{ character.weapon_level }}</td>
-            <td><a class="stretched-link btn btn-sm btn-primary" href="/census/record?character={{ character.id }}">Use</a></td>
+            <td class="position-relative"><a class="stretched-link btn btn-sm btn-primary" href="/census/character_stats?character={{ character.id }}">Stats</a></td>
+            <td class="position-relative"><a class="stretched-link btn btn-sm btn-primary" href="/census/record?character={{ character.id }}">Use</a></td>
         </tr>
         {% endfor %}
     </tbody>
