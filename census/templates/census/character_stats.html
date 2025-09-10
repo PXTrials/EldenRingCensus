@@ -25,10 +25,12 @@ a.role-btn{
             </thead>
             <tbody>
         {% for location in locations %}
-            <tr>
-                <td>{{ location }}</td>
-                <td style="text-align:right">{{ location.num_encounters }} </td>
-            </tr>
+            {% if location.num_encounters != 0 %}
+                <tr>
+                    <td>{{ location }}</td>
+                    <td style="text-align:right">{{ location.num_encounters }} </td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </table>
         <h3>Coop Types</h3>
@@ -41,10 +43,12 @@ a.role-btn{
             </thead>
             <tbody>
         {% for coop_type in coop_types %}
-            <tr>
-                <td>{{ coop_type }}</td>
-                <td style="text-align:right">{{ coop_type.num_encounters }} ({{ coop_type.num_encounters|percent:num_encounters_with_type }}%)</td>
-            </tr>
+            {% if coop_type.num_encounters != 0 %}
+                <tr>
+                    <td>{{ coop_type }}</td>
+                    <td style="text-align:right">{{ coop_type.num_encounters }} ({{ coop_type.num_encounters|percent:num_encounters_with_type }}%)</td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </table>
         {% for role in roles %}
